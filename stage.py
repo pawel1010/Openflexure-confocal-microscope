@@ -2,6 +2,7 @@ import logging
 from typing import List, Tuple
 
 from labthings import fields, find_component
+from labthings.extensions import BaseExtension
 from labthings.views import ActionView
 
 from openflexure_microscope.utilities import axes_to_array
@@ -14,6 +15,17 @@ import time
 import collections
 from multiprocessing import Process, Pipe
 
+# Create the extension class
+class MyExtension(BaseExtension):
+    def __init__(self):
+        # Superclass init function
+        super().__init__("com.openflexure.stage_mapping", version="0.0.0")
+
+        # Add our API Views (defined below MyExtension)
+        self.add_view(MeasureZAPI, "/actions/stage/move-measure")
+        self.add_view(MoveMeasureAPI, "/actions/stage/move-measure")
+        self.add_view(MoveStageAPI, "/actions/stage/move-measure")
+        self.add_view(ZeroStageAPI, "/actions/stage/move-measure")
 
 def adcMonitor(conn):
     i2c = busio.I2C(board.SCL, board.SDA)
@@ -39,7 +51,7 @@ def adcMonitor(conn):
                 nextValue = chan.value
                 if (nextValue != lastValue):
                     buffer.append(chan.value)
-            
+
             # Send back the ADC readings
             conn.send(buffer)
 
@@ -153,10 +165,11 @@ class MoveMeasureAPI(ActionView):
 
         logging.debug(position)
 
+
         v = []
         for i in range(0, args['measurements']):
             v.push(chan.value)
-           
+
         return v
 
 class MoveStageAPI(ActionView):
@@ -212,3 +225,6 @@ class ZeroStageAPI(ActionView):
             microscope.stage.zero_position()
 
         return microscope.state["stage"]
+
+LABTHINGS_EXTENSIONS = (MyExtension,)
+
