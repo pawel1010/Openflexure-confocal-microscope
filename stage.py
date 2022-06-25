@@ -166,6 +166,14 @@ class MoveMeasureAPI(ActionView):
 
         logging.debug(position)
 
+        for x in range(position[0], )
+        # Move if stage exists
+        if microscope.stage:
+            # Explicitally acquire lock with 1s timeout
+            with microscope.stage.lock(timeout=1):
+                microscope.stage.move_rel(position)
+        else:
+            logging.warning("Unable to move. No stage found.")
 
         v = []
         for i in range(0, args['measurements']):
