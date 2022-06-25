@@ -33,7 +33,7 @@ def mm(self, position, measurements, absolute=True):
         pos = {k: int(position[i]) for i, k in enumerate(["x", "y", "z"][:len(position)])}
     pos['absolute'] = absolute
     pos['measurements'] = measurements
-    response = self.post_json("/actions/stage/move-measure", pos)
+    response = self.post_json("/extensions/com.openflexure.stage-mapping/actions/stage/move-measure", pos)
     return response
 
 
