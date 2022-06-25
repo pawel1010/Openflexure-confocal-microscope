@@ -166,7 +166,7 @@ class MoveMeasureAPI(ActionView):
 
         logging.debug(position)
 
-        for x in range(position[0], )
+        for x in range(position[0], len(position)):
         # Move if stage exists
         if microscope.stage:
             # Explicitally acquire lock with 1s timeout
