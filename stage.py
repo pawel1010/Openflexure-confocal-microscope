@@ -23,7 +23,7 @@ class MyExtension(BaseExtension):
 
         # Add our API Views (defined below MyExtension)
         self.add_view(MeasureZAPI, "/actions/stage/measurezapi")
-        self.add_view(MoveMeasureAPI, "/actions/stage/movemeasureapi")
+        self.add_view(MoveMeasureAPI, "/actions/stage/move-measure")
         self.add_view(MoveStageAPI, "/actions/stage/movestageapi")
         self.add_view(ZeroStageAPI, "/actions/stage/zerostageapi")
 
