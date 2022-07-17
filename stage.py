@@ -19,14 +19,13 @@ from multiprocessing import Process, Pipe
 class MyExtension(BaseExtension):
     def __init__(self):
         # Superclass init function
-        super().__init__("com.openflexure.stage_mapping", version="0.0.0")
+        super().__init__("com.openflexure.stage-mapping", version="0.0.0")
 
         # Add our API Views (defined below MyExtension)
-        self.add_view(MeasureZAPI, "/actions/stage/measurezapi")
-        self.add_view(MoveMeasureAPI, "/actions/stage/move-measure")
-        self.add_view(MoveStageAPI, "/actions/stage/movestageapi")
-        self.add_view(ZeroStageAPI, "/actions/stage/zerostageapi")
-
+        self.add_view(MeasureZAPI, "/actions/stage/move-measure/MeasureZAPI")
+        self.add_view(MoveMeasureAPI, "/actions/stage/move-measure/MoveMeasureAPI")
+        self.add_view(MoveStageAPI, "/actions/stage/move-measure/MoveStageAPI")
+        self.add_view(ZeroStageAPI, "/actions/stage/move-measure/ZeroStageAPI")
 
 def adcMonitor(conn):
     i2c = busio.I2C(board.SCL, board.SDA)
@@ -49,7 +48,7 @@ def adcMonitor(conn):
                         running = False
 
                 # Get value and make sure it's unique
-                nextValue = chan.value
+               	nextValue = chan.value
                 if (nextValue != lastValue):
                     buffer.append(chan.value)
 
@@ -166,16 +165,16 @@ class MoveMeasureAPI(ActionView):
 
         logging.debug(position)
 
-        for x in range(position[0], len(position)):
-        # Move if stage exists
-        if microscope.stage:
-            # Explicitally acquire lock with 1s timeout
-            with microscope.stage.lock(timeout=1):
-                microscope.stage.move_rel(position)
+        for x in range(position[0],):
+            # Move if stage exists
+            if microscope.stage:
+                # Explicitally acquire lock with 1s timeout
+                with microscope.stage.lock(timeout=1):
+                    microscope.stage.move_rel(position)
         else:
             logging.warning("Unable to move. No stage found.")
 
-        v = []
+        v=[]
         for i in range(0, args['measurements']):
             v.push(chan.value)
 
