@@ -1,4 +1,4 @@
-# Openflexure-confocal-microscope
+# Openflexure-confocal-laser-microscope
 
 I'm to building the confocal microscope using OpenFlexure Delta Stage project. I wanted to use a microscope with a program in python which consists of three parts:
 
