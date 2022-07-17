@@ -33,7 +33,7 @@ def mm(self, position, measurements, absolute=True):
         pos = {k: int(position[i]) for i, k in enumerate(["x", "y", "z"][:len(position)])}
     pos['absolute'] = absolute
     pos['measurements'] = measurements
-    response = self.post_json("/extensions/com.openflexure.stage-mapping/actions/stage/move-measure", pos)
+    response = self.post_json("/extensions/com.openflexure.stage-mapping/actions/stage/move-measure/MoveMeasureAPI", pos)
     return response
 
 
@@ -109,7 +109,7 @@ for z in range(zBase-micronToStep(zRange/2), zBase+micronToStep(zRange/2) - micr
             pos['x'] = x
             pos['y'] = y
             pos['z'] = z
-            
+
             start = timer()
             values = microscope.moveMeasure(microscope, pos, measurements)
             thisTime =  timer() - start
@@ -118,7 +118,7 @@ for z in range(zBase-micronToStep(zRange/2), zBase+micronToStep(zRange/2) - micr
             # remove negative values
             #values = [a for a in values if a >= 0 ]
             #values = np.asarray(values)
-            
+
             #xs = np.linspace(0, values.shape[0], values.shape[0])
             #coef = np.polyfit(xs, values, 1)
             #poly1d_fn = np.poly1d(coef)
@@ -139,9 +139,9 @@ for z in range(zBase-micronToStep(zRange/2), zBase+micronToStep(zRange/2) - micr
 
         ix += 1
         pickle.dump(dataValues, open('dataValues.bin', 'wb'))
-    iz += 1    
-    
-    
+    iz += 1
+
+
 pickle.dump(dataValues, open('dataValues.bin', 'wb'))
 #pickle.dump(dataMaxPositions, open('dataMaxPositions.bin', 'wb'))
 
