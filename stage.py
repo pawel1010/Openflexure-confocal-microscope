@@ -94,7 +94,7 @@ class MeasureZAPI(ActionView):
         if (args.get("absolute")) and (microscope.stage):  # Only if stage exists
             target_position: List[int] = axes_to_array(args, ["x", "y", "z2"])
             logging.debug("TARGET: %s", (target_position))
-            position2: Tuple[int, int, int] = (
+            position2: Tuple[int, int, int] = Tuple(
                 target_position[i] - microscope.stage.position[i] for i in range(3)
             )
 
@@ -165,19 +165,18 @@ class MoveMeasureAPI(ActionView):
 
         logging.debug(position)
 
-        for x in range(position[0],):
-            # Move if stage exists
-            if microscope.stage:
-                # Explicitally acquire lock with 1s timeout
-                with microscope.stage.lock(timeout=1):
-                    microscope.stage.move_rel(position)
+        # Move if stage exists
+        if microscope.stage:
+            # Explicitally acquire lock with 1s timeout
+            with microscope.stage.lock(timeout=1):
+                microscope.stage.move_rel(position)
         else:
             logging.warning("Unable to move. No stage found.")
 
         v=[]
         for i in range(0, args['measurements']):
-            v.push(chan.value)
-
+            v.append(chan.value)
+            print(v)
         return v
 
 class MoveStageAPI(ActionView):
