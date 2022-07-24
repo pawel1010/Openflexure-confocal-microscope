@@ -30,7 +30,7 @@ class MyExtension(BaseExtension):
 def adcMonitor(conn):
     i2c = busio.I2C(board.SCL, board.SDA)
     ads = ADS.ADS1115(i2c)
-    ads.gain = 16
+    ads.gain = 2
     ads.mode = ADS.Mode.CONTINUOUS
     ads.data_rate = 860
     chan = AnalogIn(ads, ADS.P0)
@@ -128,7 +128,7 @@ class MeasureZAPI(ActionView):
 
 i2c = busio.I2C(board.SCL, board.SDA)
 ads = ADS.ADS1115(i2c)
-ads.gain = 16
+ads.gain = 2
 ads.mode = ADS.Mode.SINGLE
 
 chan = AnalogIn(ads, ADS.P0)
