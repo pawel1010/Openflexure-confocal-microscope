@@ -32,7 +32,7 @@ def adcMonitor(conn):
     ads = ADS.ADS1115(i2c)
     ads.gain = 2
     ads.mode = ADS.Mode.CONTINUOUS
-    ads.data_rate = 860
+    ads.data_rate = 3300
     chan = AnalogIn(ads, ADS.P0)
 
     while True:
