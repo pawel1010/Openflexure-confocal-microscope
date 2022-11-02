@@ -203,5 +203,4 @@ pos['y'] = 0
 pos['z'] = 0
 
 microscope.move(pos)
-
 # %%
